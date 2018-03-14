@@ -5,6 +5,7 @@ import os
 import stat
 
 from copy import deepcopy
+from pathlib import Path
 
 from .util import (user_dir, print_error, PrintError,
                    NoDynamicFeeEstimates, format_satoshis)
@@ -108,7 +109,7 @@ class SimpleConfig(PrintError):
             if not os.path.exists(path):
                 if os.path.islink(path):
                     raise Exception('Dangling link: ' + path)
-                os.mkdir(path)
+                Path(path).mkdir(parents=True)
                 os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
 
         make_dir(path)
