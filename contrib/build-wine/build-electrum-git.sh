@@ -20,17 +20,7 @@ set -e
 mkdir -p tmp
 cd tmp
 
-for repo in electrum-locale electrum-icons; do
-    if [ -d $repo ]; then
-	cd $repo
-	git pull
-	git checkout master
-	cd ..
-    else
-	URL=https://github.com/spesmilo/$repo.git
-	git clone -b master $URL $repo
-    fi
-done
+git clone https://github.com/spesmilo/electrum-locale.git
 
 pushd electrum-locale
 for i in ./locale/*; do
@@ -56,7 +46,6 @@ find -type d -exec touch -d '2000-11-11T11:11:11+00:00' {} +
 popd
 
 cp -r electrum-locale/locale $WINEPREFIX/drive_c/electrum/lib/
-cp electrum-icons/icons_rc.py $WINEPREFIX/drive_c/electrum/gui/qt/
 
 # Install frozen dependencies
 $PYTHON -m pip install -r ../../deterministic-build/requirements.txt
