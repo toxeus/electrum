@@ -142,6 +142,13 @@ verify_hash $LIBUSB_FILENAME "$LIBUSB_SHA256"
 
 cp libusb/MS32/dll/libusb-1.0.dll $WINEPREFIX/drive_c/python$PYTHON_VERSION/
 
+# add .bat file that exposes host's git describe in wine
+printf '%s\n' '@echo off' '/bin/sh -c "git describe --dirty --always" > out.txt' \
+    'ping -n2' 'type out.txt' > $WINEPREFIX/drive_c/windows/git.bat
+# make files without extension (i.e. unix binaries) executable in wine
+sed_cmd='s/^\("PATHEXT"=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH\)"$/\1;."/'
+sed -i "$sed_cmd" $WINEPREFIX/system.reg
+
 # add dlls needed for pyinstaller:
 cp $WINEPREFIX/drive_c/python$PYTHON_VERSION/Lib/site-packages/PyQt5/Qt/bin/* $WINEPREFIX/drive_c/python$PYTHON_VERSION/
 
