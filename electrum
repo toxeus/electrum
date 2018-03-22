@@ -70,6 +70,18 @@ if is_local or is_android:
     imp.load_module('electrum', *imp.find_module('lib'))
     imp.load_module('electrum_gui', *imp.find_module('gui'))
     imp.load_module('electrum_plugins', *imp.find_module('plugins'))
+else:
+    import pkgutil
+    modules = [('electrum_ftc', 'electrum'),
+               ('electrum_ftc_gui', 'electrum_gui'),
+               ('electrum_ftc_plugins', 'electrum_plugins')]
+    for module_name, alias_name in modules:
+        loader = pkgutil.find_loader(module_name)
+        if loader.__module__ == 'pyimod03_importers':
+            loader.load_module(alias_name, module_name)
+        else:
+            loader.name = alias_name
+            loader.load_module(alias_name)
 
 
 
