@@ -30,15 +30,15 @@ binaries = [(PYHOME+"/libusb-1.0.dll", ".")]
 binaries += [b for b in collect_dynamic_libs('PyQt5') if 'qwindowsvista' in b[0]]
 
 datas = [
-    (home+'lib/currencies.json', 'electrum'),
-    (home+'lib/servers.json', 'electrum'),
-    (home+'lib/checkpoints.json', 'electrum'),
-    (home+'lib/target_bridge.json', 'electrum'),
-    (home+'lib/servers_testnet.json', 'electrum'),
-    (home+'lib/checkpoints_testnet.json', 'electrum'),
-    (home+'lib/wordlist/english.txt', 'electrum/wordlist'),
-    (home+'lib/locale', 'electrum/locale'),
-    (home+'plugins', 'electrum_plugins'),
+    (home+'lib/currencies.json', 'electrum_ftc'),
+    (home+'lib/servers.json', 'electrum_ftc'),
+    (home+'lib/checkpoints.json', 'electrum_ftc'),
+    (home+'lib/target_bridge.json', 'electrum_ftc'),
+    (home+'lib/servers_testnet.json', 'electrum_ftc'),
+    (home+'lib/checkpoints_testnet.json', 'electrum_ftc'),
+    (home+'lib/wordlist/english.txt', 'electrum_ftc/wordlist'),
+    (home+'lib/locale', 'electrum_ftc/locale'),
+    (home+'plugins', 'electrum_ftc_plugins'),
     ('C:\\Program Files (x86)\\ZBar\\bin\\', '.')
 ]
 datas += collect_data_files('trezorlib')
@@ -67,7 +67,7 @@ a = Analysis([home+'electrum',
              datas=datas,
              #pathex=[home+'lib', home+'gui', home+'plugins'],
              hiddenimports=hiddenimports,
-             hookspath=[])
+             hookspath=[home+'contrib\\pyinstaller-hooks'])
 
 
 # http://stackoverflow.com/questions/19055089/pyinstaller-onefile-warning-pyconfig-h-when-importing-scipy-or-scipy-signal
@@ -79,7 +79,12 @@ for d in a.datas:
 # hotfix for #3171 (pre-Win10 binaries)
 a.binaries = [x for x in a.binaries if not x[1].lower().startswith(r'c:\windows')]
 
-pyz = PYZ(a.pure)
+import re
+pure = []
+for module in a.pure:
+    name = re.sub(r'^electrum(|_gui|_plugins)(\.|$)', r'electrum_ftc\1\2', module[0])
+    pure.append((name, *module[1:]))
+pyz = PYZ(pure)
 
 
 #####
