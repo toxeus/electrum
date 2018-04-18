@@ -98,6 +98,7 @@ setup(
             'servers_regtest.json',
             'currencies.json',
             'checkpoints.json',
+            'target_bridge.json',
             'checkpoints_testnet.json',
             'www/index.html',
             'wordlist/*.txt',

@@ -32,6 +32,7 @@ datas = [
     (electrum+'lib/currencies.json', PYPKG),
     (electrum+'lib/servers.json', PYPKG),
     (electrum+'lib/checkpoints.json', PYPKG),
+    (electrum+'lib/target_bridge.json', PYPKG),
     (electrum+'lib/servers_testnet.json', PYPKG),
     (electrum+'lib/checkpoints_testnet.json', PYPKG),
     (electrum+'lib/wordlist/english.txt', PYPKG + '/wordlist'),
