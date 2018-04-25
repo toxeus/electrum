@@ -489,7 +489,7 @@ SCRIPT_TYPES = {
 }
 
 
-def serialize_privkey(secret, compressed, txin_type, internal_use=False):
+def serialize_privkey(secret, compressed, txin_type, internal_use=True):
     if internal_use:
         prefix = bytes([(SCRIPT_TYPES[txin_type] + constants.net.WIF_PREFIX) & 255])
     else:
