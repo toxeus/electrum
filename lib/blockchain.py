@@ -390,9 +390,9 @@ class Blockchain(util.PrintError):
 
     @staticmethod
     def __get_target(target, nActualTimespan, nTargetTimespan, numerator, denominator):
-        nActualTimespan = max(nActualTimespan, nTargetTimespan * numerator // denominator)
-        nActualTimespan = min(nActualTimespan, nTargetTimespan * denominator // numerator)
-        new_target = min(MAX_TARGET, (target * nActualTimespan) // nTargetTimespan)
+        nActualTimespan = max(nActualTimespan, int(nTargetTimespan * numerator / denominator))
+        nActualTimespan = min(nActualTimespan, int(nTargetTimespan * denominator / numerator))
+        new_target = min(MAX_TARGET, int(target * nActualTimespan / nTargetTimespan))
         return new_target
 
     def get_header(self, height, ref_height, headers):
