@@ -344,7 +344,6 @@ class Blockchain(util.PrintError):
         first = self.get_header(last_height - 480, height, headers)
         nActualTimespanLong = int((last.get('timestamp') - first.get('timestamp')) / 480)
         nActualTimespan = (nActualTimespanShort + nActualTimespanMedium + nActualTimespanLong) // 3
-        assert nActualTimespan >= 0
         nTargetTimespan = 60
         nActualTimespan = Blockchain.__damp(nActualTimespan, nTargetTimespan)
         return Blockchain.__get_target(target, nActualTimespan, nTargetTimespan, 453, 494)
