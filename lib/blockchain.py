@@ -331,7 +331,7 @@ class Blockchain(util.PrintError):
 
     @staticmethod
     def __damp(nActualTimespan, nTargetTimespan):
-        return (nActualTimespan + 3 * nTargetTimespan) // 4
+        return int((nActualTimespan + 3 * nTargetTimespan) / 4)
 
     def __fork_three_target(self, height, headers):
         last_height = height - 1
